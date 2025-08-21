@@ -1,0 +1,107 @@
+# Order Service ConfigMap
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: order-config
+data:
+  NODE_ENV: "production"
+  PORT: "3002"
+  DB_HOST: "postgres-service"
+  DB_PORT: "5432"
+  DB_NAME: "microservices_db"
+  PRODUCT_SERVICE_URL: "http://product-service:3001"
+---
+# Order Service Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: order-secret
+type: Opaque
+stringData:
+  DB_USER: dbuser
+  DB_PASSWORD: dbpassword
+---
+# Order Service Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: order-service
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: order-service
+        version: blue
+    spec:
+      containers:
+      - name: order-service
+        image: carharms/order-service:latest
+        ports:
+        - containerPort: 3002
+        envFrom:
+        - configMapRef:
+            name: order-config
+        - secretRef:
+            name: order-secret
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3002
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3002
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+# Order Service ClusterIP Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  labels:
+    app: order-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3002
+    targetPort: 3002
+  selector:
+    app: order-service
+---
+# Order Service NodePort Service (for external access)
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-nodeport
+  labels:
+    app: order-service
+spec:
+  type: NodePort
+  ports:
+  - port: 3002
+    targetPort: 3002
+    nodePort: 30002
+  selector:
+    app: order-service

@@ -1,0 +1,270 @@
+# Kubernetes Deployment for Microservices
+
+This directory contains Kubernetes manifests for deploying the microservices application using a blue-green deployment strategy.
+
+## Directory Structure
+
+```
+kubernetes/
+├── namespaces/
+│   └── namespaces.yaml          # Environment namespaces and resource quotas
+├── base/
+│   ├── database/
+│   │   └── database.yaml        # PostgreSQL deployment
+│   ├── frontend/
+│   │   └── frontend.yaml        # Frontend service
+│   ├── product-service/
+│   │   └── product-service.yaml # Product API service
+│   └── order-service/
+│       └── order-service.yaml   # Order API service
+├── dev/
+│   ├── kustomization.yaml       # Dev environment config
+│   └── patches/                 # Environment-specific patches
+├── staging/                     # Staging environment (similar to dev)
+├── prod/                        # Production environment (similar to dev)
+├── scripts/
+│   └── blue-green-deploy.sh     # Blue-green deployment script
+└── README.md                    # This file
+```
+
+## Prerequisites
+
+- Minikube running
+- kubectl configured
+- Docker images pushed to Docker Hub
+
+## Quick Start
+
+### 1. Create Namespaces
+
+```bash
+kubectl apply -f namespaces/namespaces.yaml
+```
+
+### 2. Deploy to Development
+
+```bash
+# Apply all manifests to dev namespace
+kubectl apply -k dev/
+
+# Or apply individual services
+kubectl apply -f base/database/database.yaml -n dev
+kubectl apply -f base/frontend/frontend.yaml -n dev
+kubectl apply -f base/product-service/product-service.yaml -n dev
+kubectl apply -f base/order-service/order-service.yaml -n dev
+```
+
+### 3. Check Deployment Status
+
+```bash
+# Check all resources in dev namespace
+kubectl get all -n dev
+
+# Check pods
+kubectl get pods -n dev
+
+# Check services
+kubectl get svc -n dev
+```
+
+### 4. Access Services
+
+```bash
+# Get Minikube IP
+minikube ip
+
+# Access services via NodePort
+# Frontend: http://<minikube-ip>:30000
+# Product Service: http://<minikube-ip>:30001
+# Order Service: http://<minikube-ip>:30002
+# Database: <minikube-ip>:30432
+```
+
+## Blue-Green Deployment Strategy
+
+### Overview
+Blue-green deployment maintains two identical production environments:
+- **Blue**: Current live version
+- **Green**: New version being deployed
+
+### Benefits
+- Zero downtime deployments
+- Easy rollback capability
+- Full testing in production-like environment
+- Reduced risk of deployment issues
+
+### Deployment Process
+
+1. **Deploy Green Version**: New version deployed alongside current blue version
+2. **Health Check**: Verify green version is healthy and functional
+3. **Switch Traffic**: Route traffic from blue to green version
+4. **Monitor**: Watch for issues in green version
+5. **Cleanup**: Remove blue version or keep for rollback
+
+### Using the Blue-Green Script
+
+```bash
+# Make script executable
+chmod +x scripts/blue-green-deploy.sh
+
+# Deploy new version
+./scripts/blue-green-deploy.sh frontend v1.2.0 dev
+
+# The script will:
+# 1. Create new deployment with green version
+# 2. Wait for it to be ready
+# 3. Switch service to point to green version
+# 4. Ask for confirmation to complete or rollback
+```
+
+### Manual Blue-Green Deployment
+
+```bash
+# 1. Deploy green version
+kubectl set image deployment/frontend frontend=yourusername/frontend-service:v1.2.0 -n dev
+
+# 2. Check rollout status
+kubectl rollout status deployment/frontend -n dev
+
+# 3. Test the new version (optional port-forward for testing)
+kubectl port-forward service/frontend-service 8080:3000 -n dev
+
+# 4. If satisfied, deployment is complete
+# 5. If issues found, rollback
+kubectl rollout undo deployment/frontend -n dev
+```
+
+## Environment Configuration
+
+### Development (dev)
+- **Namespace**: dev
+- **Database**: microservices_dev
+- **Resource Limits**: 4 CPU, 8Gi RAM
+- **Storage Path**: /tmp/postgres-data-dev
+
+### Staging (staging)
+- **Namespace**: staging
+- **Database**: microservices_staging
+- **Resource Limits**: 4 CPU, 8Gi RAM
+- **Storage Path**: /tmp/postgres-data-staging
+
+### Production (prod)
+- **Namespace**: prod
+- **Database**: microservices_prod
+- **Resource Limits**: 8 CPU, 16Gi RAM
+- **Storage Path**: /tmp/postgres-data-prod
+
+## Service Communication
+
+Services communicate using internal ClusterIP services:
+- **Database**: `postgres-service:5432`
+- **Product Service**: `product-service:3001`
+- **Order Service**: `order-service:3002`
+- **Frontend**: `frontend-service:3000`
+
+## Persistent Storage
+
+### Database Persistence
+- Uses local persistent volumes with hostPath
+- Data stored in `/tmp/postgres-data-{environment}`
+- 1Gi storage allocated per environment
+
+### Backup Strategy
+```bash
+# Backup database data
+kubectl exec -it postgres-<pod-id> -n dev -- pg_dump -U postgres microservices_dev > backup.sql
+
+# Restore database data
+kubectl exec -i postgres-<pod-id> -n dev -- psql -U postgres microservices_dev < backup.sql
+```
+
+## Monitoring and Troubleshooting
+
+### Check Pod Status
+```bash
+kubectl get pods -n dev
+kubectl describe pod <pod-name> -n dev
+kubectl logs <pod-name> -n dev
+```
+
+### Check Services
+```bash
+kubectl get svc -n dev
+kubectl describe svc <service-name> -n dev
+```
+
+### Test Service Connectivity
+```bash
+# Test internal service connectivity
+kubectl run test-pod --image=busybox -it --rm --restart=Never -n dev -- nslookup product-service
+
+# Port forward to test locally
+kubectl port-forward service/product-service 3001:3001 -n dev
+```
+
+### Resource Usage
+```bash
+# Check resource usage
+kubectl top pods -n dev
+kubectl top nodes
+```
+
+## Scaling
+
+### Manual Scaling
+```bash
+# Scale frontend to 2 replicas
+kubectl scale deployment frontend --replicas=2 -n dev
+```
+
+### Horizontal Pod Autoscaler (HPA)
+```bash
+# Create HPA for frontend
+kubectl autoscale deployment frontend --cpu-percent=70 --min=1 --max=3 -n dev
+```
+
+## Cleanup
+
+```bash
+# Delete all resources in a namespace
+kubectl delete all --all -n dev
+
+# Delete namespace (this will delete everything in it)
+kubectl delete namespace dev
+```
+
+## Image Tag Strategy
+
+Update image tags in manifests to match your Jenkins pipeline tags:
+- Use semantic versioning: `v1.0.0`, `v1.1.0`
+- Use git commit SHA: `git-abc123`
+- Use build numbers: `build-456`
+
+Example:
+```yaml
+image: yourusername/frontend-service:v1.2.0
+```
+
+
+To get screenshots:
+
+Step 4: Deploy and Test
+bash# Start Minikube
+minikube start
+
+# Apply namespaces
+kubectl apply -f kubernetes/namespaces/namespaces.yaml
+
+# Deploy to dev
+kubectl apply -k kubernetes/dev/
+
+# Check status
+kubectl get all -n dev
+
+# Get Minikube IP and access services
+minikube ip
+Step 5: Take Screenshots
+
+Running pods: kubectl get pods -n dev -o wide
+Services: kubectl get svc -n dev
+Deployment rollout: kubectl rollout status deployment/frontend -n dev

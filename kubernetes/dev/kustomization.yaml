@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: dev
+
+resources:
+- ../base/database
+- ../base/frontend  
+- ../base/product-service
+- ../base/order-service
+
+labels:
+- pairs:
+    environment: dev
