@@ -9,5 +9,6 @@ resources:
 - ../base/product-service/product-service.yaml
 - ../base/order-service/order-service.yaml
 
-commonLabels:
-  environment: staging
+labels:
+- pairs:
+    environment: staging
