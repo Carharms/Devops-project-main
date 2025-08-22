@@ -53,20 +53,20 @@ spec:
     spec:
       containers:
       - name: ${SERVICE_NAME}
-        image: yourusername/${SERVICE_NAME}:${NEW_IMAGE_TAG}
+        image: carharms/${SERVICE_NAME}:${NEW_IMAGE_TAG}
         ports:
-        - containerPort: 3000
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: ${SERVICE_NAME}-config
 EOF
 
 # Wait for new deployment to be ready
 echo "Waiting for new deployment to be ready..."
 kubectl rollout status deployment/${SERVICE_NAME}-${NEW_VERSION} -n ${ENVIRONMENT}
 
-# Health check
-echo "Performing health check..."
-sleep 10
-
 # Switch service to new version
+echo "Switching service to new version: $NEW_VERSION"
 kubectl patch service ${SERVICE_NAME}-service -n ${ENVIRONMENT} -p '{"spec":{"selector":{"version":"'${NEW_VERSION}'"}}}'
 
 echo "Service switched to version: $NEW_VERSION"
@@ -76,21 +76,18 @@ echo "Test the new version. Press 'y' to complete deployment or 'r' to rollback:
 read -r response
 
 if [ "$response" = "y" ]; then
-    # Delete old deployment
-    kubectl delete deployment ${SERVICE_NAME}-${CURRENT_VERSION} -n ${ENVIRONMENT} 2>/dev/null || true
-    
-    # Rename new deployment to standard name
-    kubectl delete deployment ${SERVICE_NAME} -n ${ENVIRONMENT} 2>/dev/null || true
-    
-    # Update the main deployment
-    kubectl patch deployment ${SERVICE_NAME}-${NEW_VERSION} -n ${ENVIRONMENT} --type='merge' -p='{"metadata":{"name":"'${SERVICE_NAME}'"}}'
-    
-    echo "Deployment completed successfully!"
+    # Delete the old deployment
+    echo "Deleting old deployment..."
+    kubectl delete deployment ${SERVICE_NAME}-${CURRENT_VERSION} -n ${ENVIRONMENT}
+
+    echo "Deployment completed successfully! The old deployment has been removed."
 else
     # Rollback - switch service back to old version
+    echo "Rolling back to version: $CURRENT_VERSION"
     kubectl patch service ${SERVICE_NAME}-service -n ${ENVIRONMENT} -p '{"spec":{"selector":{"version":"'${CURRENT_VERSION}'"}}}'
     
-    # Delete new deployment
+    # Delete the failed new deployment
+    echo "Deleting new deployment..."
     kubectl delete deployment ${SERVICE_NAME}-${NEW_VERSION} -n ${ENVIRONMENT}
     
     echo "Rollback completed!"

@@ -4,10 +4,10 @@ kind: Kustomization
 namespace: staging
 
 resources:
-- ../base/database/database.yaml
-- ../base/frontend/frontend.yaml
-- ../base/product-service/product-service.yaml
-- ../base/order-service/order-service.yaml
+- ../base/database
+- ../base/frontend
+- ../base/product-service
+- ../base/order-service
 
 labels:
 - pairs:
