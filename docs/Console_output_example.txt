@@ -1,0 +1,1331 @@
+Branch indexing
+ > git.exe rev-parse --resolve-git-dir C:\Users\Carte\.jenkins\caches\git-5d8f1037eef9c8f40ec66db8a21ade9e\.git # timeout=10
+Setting origin to https://github.com/Carharms/microservice3-devops-database.git
+ > git.exe config remote.origin.url https://github.com/Carharms/microservice3-devops-database.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.49.0.windows.1'
+ > git.exe config --get remote.origin.url # timeout=10
+using GIT_ASKPASS to set credentials Github-devops-credentials
+ > git.exe fetch --tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/HEAD
+Seen branch in repository origin/develop
+Seen branch in repository origin/main
+Seen 3 remote branches
+Obtained Jenkinsfile from e651598d3879dd5c372e5807f234bffa7a420d7d
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential 15e6e08d-3efd-4483-8886-c7936d2f8450
+ > git.exe rev-parse --resolve-git-dir C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/Carharms/microservice3-devops-database.git # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/Carharms/microservice3-devops-database.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.49.0.windows.1'
+using GIT_ASKPASS to set credentials Github-devops-credentials
+ > git.exe fetch --no-tags --force --progress -- https://github.com/Carharms/microservice3-devops-database.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision e651598d3879dd5c372e5807f234bffa7a420d7d (main)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f e651598d3879dd5c372e5807f234bffa7a420d7d # timeout=10
+Commit message: "Update V0.9.6"
+ > git.exe rev-list --no-walk 94de6fa8e59be3ad492e8637c008d02a78582723 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential 15e6e08d-3efd-4483-8886-c7936d2f8450
+ > git.exe rev-parse --resolve-git-dir C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\.git # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url https://github.com/Carharms/microservice3-devops-database.git # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/Carharms/microservice3-devops-database.git
+ > git.exe --version # timeout=10
+ > git --version # 'git version 2.49.0.windows.1'
+using GIT_ASKPASS to set credentials Github-devops-credentials
+ > git.exe fetch --no-tags --force --progress -- https://github.com/Carharms/microservice3-devops-database.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision e651598d3879dd5c372e5807f234bffa7a420d7d (main)
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f e651598d3879dd5c372e5807f234bffa7a420d7d # timeout=10
+Commit message: "Update V0.9.6"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Installing Python dependencies and running code quality checks...
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>pip install ruff black pytest 
+Requirement already satisfied: ruff in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (0.12.9)
+Requirement already satisfied: black in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (25.1.0)
+Requirement already satisfied: pytest in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (7.4.0)
+Requirement already satisfied: click>=8.0.0 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from black) (8.2.1)
+Requirement already satisfied: mypy-extensions>=0.4.3 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from black) (1.1.0)
+Requirement already satisfied: packaging>=22.0 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from black) (24.2)
+Requirement already satisfied: pathspec>=0.9.0 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from black) (0.12.1)
+Requirement already satisfied: platformdirs>=2 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from black) (4.3.8)
+Requirement already satisfied: iniconfig in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from pytest) (2.1.0)
+Requirement already satisfied: pluggy<2.0,>=0.12 in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from pytest) (1.6.0)
+Requirement already satisfied: colorama in c:\users\carte\appdata\local\programs\python\python313\lib\site-packages (from pytest) (0.4.6)
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>black . --check --diff 
+--- C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\tests\test_db_init.py	2025-08-22 20:50:16.309902+00:00
++++ C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\tests\test_db_init.py	2025-08-22 21:28:18.834065+00:00
+@@ -10,206 +10,308 @@
+ import pytest
+ 
+ 
+ class TestDatabaseSchema:
+     """Unit tests for database schema validation - no database connection required"""
+-    
++
+     def test_init_sql_file_exists(self):
+         """Test that the init.sql file exists"""
+         assert os.path.exists("scripts/init.sql"), "scripts/init.sql file should exist"
+-    
++
+     def test_init_sql_contains_products_table(self):
+         """Test that init.sql contains products table definition"""
+         with open("scripts/init.sql", "r") as f:
+             content = f.read().upper()
+             assert "CREATE TABLE" in content, "Should contain CREATE TABLE statements"
+             assert "PRODUCTS" in content, "Should contain products table definition"
+-    
++
+     def test_init_sql_contains_orders_table(self):
+         """Test that init.sql contains orders table definition"""
+         with open("scripts/init.sql", "r") as f:
+             content = f.read().upper()
+             assert "ORDERS" in content, "Should contain orders table definition"
+-    
++
+     def test_init_sql_contains_foreign_key(self):
+         """Test that init.sql contains foreign key relationship"""
+         with open("scripts/init.sql", "r") as f:
+             content = f.read().upper()
+             assert "FOREIGN KEY" in content, "Should contain foreign key constraint"
+             assert "REFERENCES" in content, "Should reference parent table"
+-    
++
+     def test_init_sql_contains_sample_data(self):
+         """Test that init.sql contains sample data inserts"""
+         with open("scripts/init.sql", "r") as f:
+             content = f.read().upper()
+             assert "INSERT INTO" in content, "Should contain INSERT statements"
+-            assert "HARVARD BUSINESS REVIEW" in content, "Should contain sample product data"
+-    
++            assert (
++                "HARVARD BUSINESS REVIEW" in content
++            ), "Should contain sample product data"
++
+     def test_dockerfile_exists(self):
+         """Test that Dockerfile exists and contains PostgreSQL"""
+         assert os.path.exists("Dockerfile"), "Dockerfile should exist"
+-        
++
+         with open("Dockerfile", "r") as f:
+             content = f.read().upper()
+             assert "FROM POSTGRES" in content, "Should use PostgreSQL base image"
+             assert "COPY SCRIPTS/INIT.SQL" in content, "Should copy init.sql"
+-    
++
+     def test_docker_compose_exists(self):
+         """Test that docker-compose.yml exists and is properly configured"""
+         assert os.path.exists("docker-compose.yml"), "docker-compose.yml should exist"
+-        
++
+         with open("docker-compose.yml", "r") as f:
+             content = f.read()
+             assert "postgres" in content.lower(), "Should contain postgres service"
+             assert "5432" in content, "Should expose PostgreSQL port"
+ 
+ 
+ class TestDatabaseIntegration:
+     """Integration tests that require running database"""
+-    
++
+     @classmethod
+     def setup_class(cls):
+         """Setup for integration tests - wait for database to be available"""
+         cls.max_retries = 30
+         cls.db_ready = False
+-        
++
+         # Check if database is running and accessible
+         for i in range(cls.max_retries):
+             try:
+-                result = subprocess.run([
+-                    "docker-compose", "-f", "docker-compose.yml", 
+-                    "exec", "-T", "postgres", 
+-                    "pg_isready", "-U", "dbuser", "-d", "subscriptions"
+-                ], capture_output=True, text=True, timeout=10)
+-                
++                result = subprocess.run(
++                    [
++                        "docker-compose",
++                        "-f",
++                        "docker-compose.yml",
++                        "exec",
++                        "-T",
++                        "postgres",
++                        "pg_isready",
++                        "-U",
++                        "dbuser",
++                        "-d",
++                        "subscriptions",
++                    ],
++                    capture_output=True,
++                    text=True,
++                    timeout=10,
++                )
++
+                 if result.returncode == 0:
+                     cls.db_ready = True
+                     break
+-                    
++
+             except (subprocess.TimeoutExpired, subprocess.SubprocessError):
+                 pass
+-            
++
+             time.sleep(2)
+-    
++
+     def test_database_connection(self):
+         """Test that database is accessible"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "pg_isready", "-U", "dbuser", "-d", "subscriptions"
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "pg_isready",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Database should be accessible"
+-    
++
+     def test_products_table_created(self):
+         """Test that products table was created successfully"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
++
+         # Query to check if products table exists
+         sql_query = """
+         SELECT COUNT(*) FROM information_schema.tables 
+         WHERE table_name = 'products';
+         """
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "psql", "-U", "dbuser", "-d", "subscriptions", 
+-            "-c", sql_query
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "psql",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++                "-c",
++                sql_query,
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Query should execute successfully"
+         assert "1" in result.stdout, "Products table should exist"
+-    
++
+     def test_orders_table_created(self):
+         """Test that orders table was created successfully"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
++
+         sql_query = """
+         SELECT COUNT(*) FROM information_schema.tables 
+         WHERE table_name = 'orders';
+         """
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "psql", "-U", "dbuser", "-d", "subscriptions",
+-            "-c", sql_query
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "psql",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++                "-c",
++                sql_query,
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Query should execute successfully"
+         assert "1" in result.stdout, "Orders table should exist"
+-    
++
+     def test_sample_products_inserted(self):
+         """Test that sample products were inserted"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
++
+         sql_query = "SELECT COUNT(*) FROM products;"
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "psql", "-U", "dbuser", "-d", "subscriptions",
+-            "-c", sql_query
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "psql",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++                "-c",
++                sql_query,
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Query should execute successfully"
+         assert "5" in result.stdout, "Should have 5 sample products"
+-    
++
+     def test_sample_orders_inserted(self):
+         """Test that sample orders were inserted"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
++
+         sql_query = "SELECT COUNT(*) FROM orders;"
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "psql", "-U", "dbuser", "-d", "subscriptions",
+-            "-c", sql_query
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "psql",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++                "-c",
++                sql_query,
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Query should execute successfully"
+         assert "3" in result.stdout, "Should have 3 sample orders"
+-    
++
+     def test_foreign_key_constraint_works(self):
+         """Test that foreign key constraint is enforced"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
++
+         # Try to insert order with invalid product_id (should fail)
+         sql_query = "INSERT INTO orders (product_id, quantity, total_price) VALUES (999, 1, 10.00);"
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "psql", "-U", "dbuser", "-d", "subscriptions",
+-            "-c", sql_query
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "psql",
++                "-U",
++                "dbuser",
++                "-d",
++                "subscriptions",
++                "-c",
++                sql_query,
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode != 0, "Invalid foreign key should be rejected"
+-        assert "violates foreign key constraint" in result.stderr.lower(), "Should show foreign key error"
+-    
++        assert (
++            "violates foreign key constraint" in result.stderr.lower()
++        ), "Should show foreign key error"
++
+     def test_database_healthcheck(self):
+         """Test that database healthcheck script works"""
+         if not TestDatabaseIntegration.db_ready:
+             pytest.skip("Database not available for integration tests")
+-        
+-        result = subprocess.run([
+-            "docker-compose", "-f", "docker-compose.yml",
+-            "exec", "-T", "postgres",
+-            "/usr/local/bin/healthcheck.sh"
+-        ], capture_output=True, text=True)
+-        
++
++        result = subprocess.run(
++            [
++                "docker-compose",
++                "-f",
++                "docker-compose.yml",
++                "exec",
++                "-T",
++                "postgres",
++                "/usr/local/bin/healthcheck.sh",
++            ],
++            capture_output=True,
++            text=True,
++        )
++
+         assert result.returncode == 0, "Healthcheck should pass"
+         assert "healthy" in result.stdout.lower(), "Should report database as healthy"
+ 
+ 
+ if __name__ == "__main__":
+-    pytest.main([__file__, "-v", "--tb=short"])
+\ No newline at end of file
++    pytest.main([__file__, "-v", "--tb=short"])
+would reformat C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\tests\test_db_init.py
+
+Oh no! \U0001f4a5 \U0001f494 \U0001f4a5
+1 file would be reformatted.
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>ruff check . --fix 
+All checks passed!
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>if not exist "scripts\init.sql" exit /b 1 
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>if not exist "Dockerfile" exit /b 1 
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>if not exist "docker-compose.yml" exit /b 1 
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Test)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Running database tests...
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>pytest tests/test_db_init.py -v --tb=short   || echo "Tests completed" 
+============================= test session starts =============================
+platform win32 -- Python 3.13.3, pytest-7.4.0, pluggy-1.6.0 -- C:\Users\Carte\AppData\Local\Programs\Python\Python313\python.exe
+cachedir: .pytest_cache
+metadata: {'Python': '3.13.3', 'Platform': 'Windows-11-10.0.26100-SP0', 'Packages': {'pytest': '7.4.0', 'pluggy': '1.6.0'}, 'Plugins': {'base-url': '2.1.0', 'html': '4.1.1', 'metadata': '3.1.1', 'playwright': '0.7.0'}, 'CI': 'true', 'BUILD_NUMBER': '5', 'BUILD_ID': '5', 'BUILD_URL': 'http://localhost:8080/job/microservice3-db-multibranch/job/main/5/', 'NODE_NAME': 'built-in', 'JOB_NAME': 'microservice3-db-multibranch/main', 'BUILD_TAG': 'jenkins-microservice3-db-multibranch-main-5', 'EXECUTOR_NUMBER': '1', 'JENKINS_URL': 'http://localhost:8080/', 'JAVA_HOME': 'C:\\Program Files\\Java\\jdk-21', 'WORKSPACE': 'C:\\Users\\Carte\\.jenkins\\workspace\\icroservice3-db-multibranch_main', 'GIT_COMMIT': 'e651598d3879dd5c372e5807f234bffa7a420d7d', 'GIT_URL': 'https://github.com/Carharms/microservice3-devops-database.git', 'GIT_BRANCH': 'main', 'Base URL': ''}
+rootdir: C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main
+plugins: base-url-2.1.0, html-4.1.1, metadata-3.1.1, playwright-0.7.0
+collecting ... collected 14 items
+
+tests/test_db_init.py::TestDatabaseSchema::test_init_sql_file_exists PASSED [  7%]
+tests/test_db_init.py::TestDatabaseSchema::test_init_sql_contains_products_table PASSED [ 14%]
+tests/test_db_init.py::TestDatabaseSchema::test_init_sql_contains_orders_table PASSED [ 21%]
+tests/test_db_init.py::TestDatabaseSchema::test_init_sql_contains_foreign_key PASSED [ 28%]
+tests/test_db_init.py::TestDatabaseSchema::test_init_sql_contains_sample_data PASSED [ 35%]
+tests/test_db_init.py::TestDatabaseSchema::test_dockerfile_exists PASSED [ 42%]
+tests/test_db_init.py::TestDatabaseSchema::test_docker_compose_exists PASSED [ 50%]
+tests/test_db_init.py::TestDatabaseIntegration::test_database_connection SKIPPED [ 57%]
+tests/test_db_init.py::TestDatabaseIntegration::test_products_table_created SKIPPED [ 64%]
+tests/test_db_init.py::TestDatabaseIntegration::test_orders_table_created SKIPPED [ 71%]
+tests/test_db_init.py::TestDatabaseIntegration::test_sample_products_inserted SKIPPED [ 78%]
+tests/test_db_init.py::TestDatabaseIntegration::test_sample_orders_inserted SKIPPED [ 85%]
+tests/test_db_init.py::TestDatabaseIntegration::test_foreign_key_constraint_works SKIPPED [ 92%]
+tests/test_db_init.py::TestDatabaseIntegration::test_database_healthcheck SKIPPED [100%]
+
+=================== 7 passed, 7 skipped in 64.78s (0:01:04) ===================
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker-compose -f docker-compose.yml down --remove-orphans   || echo "Cleanup done" 
+time="2025-08-22T16:29:25-05:00" level=warning msg="C:\\Users\\Carte\\.jenkins\\workspace\\icroservice3-db-multibranch_main\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (SonarQube Analysis)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] tool
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: SonarQube
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>C:\Users\Carte\.jenkins\tools\hudson.plugins.sonar.SonarRunnerInstallation\SonarScanner\bin\sonar-scanner.bat -Dsonar.projectKey=db-service -Dsonar.sources=. 
+16:29:30.397 INFO  Scanner configuration file: C:\Users\Carte\.jenkins\tools\hudson.plugins.sonar.SonarRunnerInstallation\SonarScanner\bin\..\conf\sonar-scanner.properties
+16:29:30.417 INFO  Project root configuration file: NONE
+16:29:30.466 INFO  SonarScanner CLI 7.2.0.5079
+16:29:30.484 INFO  Windows 11 10.0 amd64
+16:29:35.972 INFO  Communicating with SonarQube Community Build 25.8.0.112029
+16:29:35.973 WARN  Use of 'sonar.login' property has been deprecated in favor of 'sonar.token' (or the env variable alternative 'SONAR_TOKEN'). Please use the latter when passing a token.
+16:29:35.976 INFO  JRE provisioning: os[windows], arch[amd64]
+16:29:36.611 INFO  Starting SonarScanner Engine...
+16:29:36.614 INFO  Java 17.0.13 Eclipse Adoptium (64-bit)
+16:29:40.635 INFO  Load global settings
+16:29:40.753 INFO  Load global settings (done) | time=117ms
+16:29:40.758 INFO  Server id: 147B411E-AZjOSDhKDHtY9xjEYsnY
+16:29:40.769 INFO  Loading required plugins
+16:29:40.771 INFO  Load plugins index
+16:29:40.792 INFO  Load plugins index (done) | time=23ms
+16:29:40.792 INFO  Load/download plugins
+16:29:40.835 INFO  Load/download plugins (done) | time=43ms
+16:29:41.207 INFO  Process project properties
+16:29:41.242 INFO  Process project properties (done) | time=35ms
+16:29:41.273 INFO  Project key: db-service
+16:29:41.274 INFO  Base dir: C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main
+16:29:41.275 INFO  Working dir: C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main\.scannerwork
+16:29:41.301 INFO  Load project settings for component key: 'db-service'
+16:29:41.343 INFO  Load project settings for component key: 'db-service' (done) | time=42ms
+16:29:41.378 INFO  Load quality profiles
+16:29:41.483 INFO  Load quality profiles (done) | time=104ms
+16:29:41.511 INFO  Auto-configuring with CI 'Jenkins'
+16:29:41.573 INFO  Load active rules
+16:29:42.130 INFO  Load active rules (done) | time=557ms
+16:29:42.138 INFO  Load analysis cache
+16:29:42.181 INFO  Load analysis cache (7.2 kB) | time=43ms
+16:29:42.265 WARN  The property 'sonar.login' is deprecated and will be removed in the future. Please use the 'sonar.token' property instead when passing a token.
+16:29:42.301 INFO  Preprocessing files...
+16:29:42.697 INFO  3 languages detected in 10 preprocessed files (done) | time=395ms
+16:29:42.697 INFO  91 files ignored because of scm ignore settings
+16:29:42.699 INFO  Loading plugins for detected languages
+16:29:42.700 INFO  Load/download plugins
+16:29:42.714 INFO  Load/download plugins (done) | time=14ms
+16:29:43.036 INFO  Load project repositories
+16:29:43.246 INFO  Load project repositories (done) | time=210ms
+16:29:43.277 INFO  Indexing files...
+16:29:43.278 INFO  Project configuration:
+16:29:43.298 INFO  10 files indexed (done) | time=21ms
+16:29:43.301 INFO  Quality profile for docker: Sonar way
+16:29:43.302 INFO  Quality profile for py: Sonar way
+16:29:43.302 INFO  Quality profile for yaml: Sonar way
+16:29:43.303 INFO  ------------- Run sensors on module db-service
+16:29:43.374 INFO  Load metrics repository
+16:29:43.403 INFO  Load metrics repository (done) | time=29ms
+16:29:44.610 INFO  Sensor JaCoCo XML Report Importer [jacoco]
+16:29:44.611 INFO  'sonar.coverage.jacoco.xmlReportPaths' is not defined. Using default locations: target/site/jacoco/jacoco.xml,target/site/jacoco-it/jacoco.xml,build/reports/jacoco/test/jacocoTestReport.xml
+16:29:44.612 INFO  No report imported, no coverage information will be imported by JaCoCo XML Report Importer
+16:29:44.613 INFO  Sensor JaCoCo XML Report Importer [jacoco] (done) | time=3ms
+16:29:44.613 INFO  Sensor IaC CloudFormation Sensor [iac]
+16:29:44.659 INFO  0 source files to be analyzed
+16:29:44.666 INFO  0/0 source files have been analyzed
+16:29:44.667 INFO  Sensor IaC CloudFormation Sensor [iac] (done) | time=55ms
+16:29:44.668 INFO  Sensor IaC Kubernetes Sensor [iac]
+16:29:44.826 INFO  0 source files to be parsed
+16:29:44.827 INFO  0/0 source files have been parsed
+16:29:44.827 INFO  0 source files to be analyzed
+16:29:44.827 INFO  0/0 source files have been analyzed
+16:29:44.828 INFO  0 source files to be checked
+16:29:44.828 INFO  0/0 source files have been checked
+16:29:44.828 INFO  Sensor IaC Kubernetes Sensor [iac] (done) | time=161ms
+16:29:44.828 INFO  Sensor IaC Docker Sensor [iac]
+16:29:45.075 INFO  1 source file to be analyzed
+16:29:45.355 INFO  1/1 source file has been analyzed
+16:29:45.356 INFO  Sensor IaC Docker Sensor [iac] (done) | time=527ms
+16:29:45.356 INFO  Sensor Java Config Sensor [iac]
+16:29:45.376 INFO  0 source files to be analyzed
+16:29:45.377 INFO  0/0 source files have been analyzed
+16:29:45.378 INFO  Sensor Java Config Sensor [iac] (done) | time=20ms
+16:29:45.378 INFO  Sensor Python Sensor [python]
+16:29:45.388 WARN  Your code is analyzed as compatible with all Python 3 versions by default. You can get a more precise analysis by setting the exact Python version in your configuration via the parameter "sonar.python.version"
+16:29:45.412 INFO  Starting global symbols computation
+16:29:45.417 INFO  1 source file to be analyzed
+16:29:46.099 INFO  1/1 source file has been analyzed
+16:29:46.103 INFO  Finished step global symbols computation in 685ms
+16:29:46.196 INFO  Starting rules execution
+16:29:46.197 INFO  1 source file to be analyzed
+16:29:47.631 INFO  1/1 source file has been analyzed
+16:29:47.632 INFO  Finished step rules execution in 1435ms
+16:29:47.632 INFO  The Python analyzer was able to leverage cached data from previous analyses for 0 out of 1 files. These files were not parsed.
+16:29:47.632 INFO  Sensor Python Sensor [python] (done) | time=2257ms
+16:29:47.633 INFO  Sensor Cobertura Sensor for Python coverage [python]
+16:29:47.660 INFO  Sensor Cobertura Sensor for Python coverage [python] (done) | time=26ms
+16:29:47.660 INFO  Sensor PythonXUnitSensor [python]
+16:29:47.681 INFO  Sensor PythonXUnitSensor [python] (done) | time=21ms
+16:29:47.682 INFO  Sensor Python Dependency Sensor [python]
+16:29:47.690 INFO  Sensor Python Dependency Sensor [python] (done) | time=8ms
+16:29:47.691 INFO  Sensor JavaScript inside YAML analysis [javascript]
+16:29:47.698 INFO  No input files found for analysis
+16:29:47.699 INFO  Hit the cache for 0 out of 0
+16:29:47.699 INFO  Miss the cache for 0 out of 0
+16:29:47.699 INFO  Sensor JavaScript inside YAML analysis [javascript] (done) | time=11ms
+16:29:47.700 INFO  Sensor CSS Rules [javascript]
+16:29:47.700 INFO  No CSS, PHP, HTML or VueJS files are found in the project. CSS analysis is skipped.
+16:29:47.700 INFO  Sensor CSS Rules [javascript] (done) | time=0ms
+16:29:47.700 INFO  Sensor TextAndSecretsSensor [text]
+16:29:47.719 INFO  Available processors: 14
+16:29:47.719 INFO  Using 14 threads for analysis.
+16:29:47.729 INFO  The property "sonar.tests" is not set. To improve the analysis accuracy, we categorize a file as a test file if any of the following is true:
+  * The filename starts with "test"
+  * The filename contains "test." or "tests."
+  * Any directory in the file path is named: "doc", "docs", "test" or "tests"
+  * Any directory in the file path has a name ending in "test" or "tests"
+
+16:29:48.279 INFO  Start fetching files for the text and secrets analysis
+16:29:48.420 INFO  Using Git CLI to retrieve untracked files
+16:29:48.472 INFO  Retrieving language associated files and files included via "sonar.text.inclusions" that are tracked by git
+16:29:48.477 INFO  Starting the text and secrets analysis
+16:29:48.481 INFO  4 source files to be analyzed for the text and secrets analysis
+16:29:48.542 INFO  4/4 source files have been analyzed for the text and secrets analysis
+16:29:48.546 INFO  Sensor TextAndSecretsSensor [text] (done) | time=846ms
+16:29:48.557 INFO  ------------- Run sensors on project
+16:29:48.753 INFO  Sensor Zero Coverage Sensor
+16:29:48.763 INFO  Sensor Zero Coverage Sensor (done) | time=11ms
+16:29:48.764 INFO  ------------- Gather SCA dependencies on project
+16:29:48.768 INFO  Dependency analysis skipped
+16:29:48.787 INFO  CPD Executor Calculating CPD for 1 file
+16:29:48.796 INFO  CPD Executor CPD calculation finished (done) | time=10ms
+16:29:48.802 INFO  SCM revision ID 'e651598d3879dd5c372e5807f234bffa7a420d7d'
+16:29:49.098 INFO  Analysis report generated in 124ms, dir size=270.0 kB
+16:29:49.161 INFO  Analysis report compressed in 41ms, zip size=41.0 kB
+16:29:49.198 INFO  Analysis report uploaded in 37ms
+16:29:49.201 INFO  ANALYSIS SUCCESSFUL, you can find the results at: http://localhost:9000/dashboard?id=db-service
+16:29:49.202 INFO  Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+16:29:49.202 INFO  More about the report processing at http://localhost:9000/api/ce/task?id=215b1659-2bdd-430c-86ac-f6cfa68c395e
+16:29:49.226 INFO  Analysis total time: 8.329 s
+16:29:49.229 INFO  SonarScanner Engine completed successfully
+16:29:49.822 INFO  EXECUTION SUCCESS
+16:29:49.825 INFO  Total time: 19.593s
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Container Build)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Building Docker image...
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>cd   && dir
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main
+ Volume in drive C is Windows
+ Volume Serial Number is 8A92-262C
+
+ Directory of C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main
+
+08/22/2025  04:28 PM    <DIR>          .
+08/22/2025  03:50 PM    <DIR>          ..
+08/22/2025  03:50 PM               261 .gitignore
+08/22/2025  03:51 PM    <DIR>          .pytest_cache
+08/22/2025  03:50 PM    <DIR>          .ruff_cache
+08/22/2025  03:50 PM             1,069 docker-compose.yml
+08/22/2025  03:50 PM               705 Dockerfile
+08/22/2025  04:28 PM            13,342 Jenkinsfile
+08/22/2025  03:50 PM             1,921 README.MD
+08/22/2025  03:50 PM                14 requirements.txt
+08/22/2025  03:50 PM    <DIR>          scripts
+08/22/2025  03:50 PM    <DIR>          tests
+               6 File(s)         17,312 bytes
+               6 Dir(s)  329,182,470,144 bytes free
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>type Dockerfile   || echo "Dockerfile not found" 
+# PostgreSQL image
+FROM postgres:15-alpine
+
+# Environment variables (these can be overridden at runtime)
+ENV POSTGRES_DB=subscriptions
+ENV POSTGRES_USER=dbuser  
+ENV POSTGRES_PASSWORD=dbpassword
+
+# Copy initialization script
+COPY scripts/init.sql /docker-entrypoint-initdb.d/
+
+# Copy and setup healthcheck script
+COPY scripts/healthcheck.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/healthcheck.sh
+
+# Health check configuration
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+    CMD /usr/local/bin/healthcheck.sh
+
+# Expose PostgreSQL port
+EXPOSE 5432
+
+# Use default PostgreSQL entrypoint and command
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["postgres"]
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker build -t "carharms/db-service:5" . 
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 744B 0.0s done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/postgres:15-alpine
+#2 DONE 0.6s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.1s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [1/4] FROM docker.io/library/postgres:15-alpine@sha256:987b242173006d6df08506f10b967a71478a3610664cfefbc49b9c775d3d0eed
+#5 resolve docker.io/library/postgres:15-alpine@sha256:987b242173006d6df08506f10b967a71478a3610664cfefbc49b9c775d3d0eed
+#5 resolve docker.io/library/postgres:15-alpine@sha256:987b242173006d6df08506f10b967a71478a3610664cfefbc49b9c775d3d0eed 0.1s done
+#5 DONE 0.1s
+
+#4 [internal] load build context
+#4 transferring context: 1.92kB 0.0s done
+#4 DONE 0.1s
+
+#6 [3/4] COPY scripts/healthcheck.sh /usr/local/bin/
+#6 CACHED
+
+#7 [2/4] COPY scripts/init.sql /docker-entrypoint-initdb.d/
+#7 CACHED
+
+#8 [4/4] RUN chmod +x /usr/local/bin/healthcheck.sh
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:86308377da364368201411e1772450ce4db94e12f1ab0dc6d12952176fb51425 done
+#9 exporting config sha256:2888d6b0e1bf2aee1510387bd1ff747a8327d775154da5edcaa72bd38549570b done
+#9 exporting attestation manifest sha256:be5602c9ee139a36257acd662301ffc7565bcc88d0001c0c5bb937a14136d4fd 0.1s done
+#9 exporting manifest list sha256:46451a3e23604e6226bc48ce4bd420da70a43b991557a2fedf5d74cfe07f28ac
+#9 exporting manifest list sha256:46451a3e23604e6226bc48ce4bd420da70a43b991557a2fedf5d74cfe07f28ac 0.0s done
+#9 naming to docker.io/carharms/db-service:5 done
+#9 unpacking to docker.io/carharms/db-service:5 0.0s done
+#9 DONE 0.3s
+
+ [33m1 warning found (use docker --debug to expand):
+[0m - SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "POSTGRES_PASSWORD") (line 7)
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] echo
+Built image: carharms/db-service:5
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker images   | findstr carharms/db-service   | findstr 5 
+carharms/db-service                            60        8f6965af93f9   43 hours ago   391MB
+carharms/db-service                            58        d062f6ec3f06   43 hours ago   391MB
+carharms/db-service                            5         46451a3e2360   43 hours ago   391MB
+carharms/db-service                            59        44b85d3d82a9   43 hours ago   391MB
+[Pipeline] isUnix
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker tag "carharms/db-service:5" "carharms/db-service:latest" 
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] echo
+Tagged image with: latest
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Container Security Scan)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Running container security scan...
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy:latest image --exit-code 0 --severity HIGH,CRITICAL carharms/db-service:5 
+2025-08-22T21:29:56Z	INFO	[vulndb] Need to update DB
+2025-08-22T21:29:56Z	INFO	[vulndb] Downloading vulnerability DB...
+2025-08-22T21:29:56Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+303.21 KiB / 68.90 MiB [>____________________________________________________________] 0.43% ? p/s ?1.19 MiB / 68.90 MiB [->_____________________________________________________________] 1.72% ? p/s ?2.23 MiB / 68.90 MiB [-->____________________________________________________________] 3.24% ? p/s ?3.39 MiB / 68.90 MiB [-->_______________________________________________] 4.92% 5.16 MiB p/s ETA 12s4.61 MiB / 68.90 MiB [--->______________________________________________] 6.69% 5.16 MiB p/s ETA 12s5.83 MiB / 68.90 MiB [---->_____________________________________________] 8.46% 5.16 MiB p/s ETA 12s7.08 MiB / 68.90 MiB [----->___________________________________________] 10.27% 5.22 MiB p/s ETA 11s8.33 MiB / 68.90 MiB [----->___________________________________________] 12.09% 5.22 MiB p/s ETA 11s9.55 MiB / 68.90 MiB [------>__________________________________________] 13.86% 5.22 MiB p/s ETA 11s10.81 MiB / 68.90 MiB [------->________________________________________] 15.69% 5.29 MiB p/s ETA 10s12.12 MiB / 68.90 MiB [-------->_______________________________________] 17.60% 5.29 MiB p/s ETA 10s13.41 MiB / 68.90 MiB [--------->______________________________________] 19.46% 5.29 MiB p/s ETA 10s14.70 MiB / 68.90 MiB [---------->_____________________________________] 21.34% 5.36 MiB p/s ETA 10s16.22 MiB / 68.90 MiB [----------->_____________________________________] 23.54% 5.36 MiB p/s ETA 9s18.83 MiB / 68.90 MiB [------------->___________________________________] 27.33% 5.36 MiB p/s ETA 9s22.11 MiB / 68.90 MiB [--------------->_________________________________] 32.09% 5.82 MiB p/s ETA 8s25.39 MiB / 68.90 MiB [------------------>______________________________] 36.85% 5.82 MiB p/s ETA 7s28.66 MiB / 68.90 MiB [-------------------->____________________________] 41.59% 5.82 MiB p/s ETA 6s30.06 MiB / 68.90 MiB [--------------------->___________________________] 43.63% 6.30 MiB p/s ETA 6s31.41 MiB / 68.90 MiB [---------------------->__________________________] 45.58% 6.30 MiB p/s ETA 5s33.09 MiB / 68.90 MiB [----------------------->_________________________] 48.03% 6.30 MiB p/s ETA 5s34.97 MiB / 68.90 MiB [------------------------>________________________] 50.75% 6.42 MiB p/s ETA 5s36.80 MiB / 68.90 MiB [-------------------------->______________________] 53.41% 6.42 MiB p/s ETA 5s39.49 MiB / 68.90 MiB [---------------------------->____________________] 57.31% 6.42 MiB p/s ETA 4s42.25 MiB / 68.90 MiB [------------------------------>__________________] 61.32% 6.79 MiB p/s ETA 3s45.52 MiB / 68.90 MiB [-------------------------------->________________] 66.06% 6.79 MiB p/s ETA 3s48.36 MiB / 68.90 MiB [---------------------------------->______________] 70.19% 6.79 MiB p/s ETA 3s50.17 MiB / 68.90 MiB [----------------------------------->_____________] 72.82% 7.20 MiB p/s ETA 2s52.74 MiB / 68.90 MiB [------------------------------------->___________] 76.54% 7.20 MiB p/s ETA 2s56.00 MiB / 68.90 MiB [--------------------------------------->_________] 81.28% 7.20 MiB p/s ETA 1s58.42 MiB / 68.90 MiB [----------------------------------------->_______] 84.79% 7.62 MiB p/s ETA 1s60.61 MiB / 68.90 MiB [------------------------------------------->_____] 87.97% 7.62 MiB p/s ETA 1s63.28 MiB / 68.90 MiB [--------------------------------------------->___] 91.85% 7.62 MiB p/s ETA 0s65.86 MiB / 68.90 MiB [---------------------------------------------->__] 95.59% 7.93 MiB p/s ETA 0s68.55 MiB / 68.90 MiB [------------------------------------------------>] 99.49% 7.93 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.93 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.75 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.75 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.75 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.25 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.25 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 7.25 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.78 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.78 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.78 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.34 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.34 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 6.34 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 5.93 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [----------------------------------------------->] 100.00% 5.93 MiB p/s ETA 0s68.90 MiB / 68.90 MiB [---------------------------------------------------] 100.00% 7.03 MiB p/s 10s2025-08-22T21:30:07Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2025-08-22T21:30:07Z	INFO	[vuln] Vulnerability scanning is enabled
+2025-08-22T21:30:07Z	INFO	[secret] Secret scanning is enabled
+2025-08-22T21:30:07Z	INFO	[secret] If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2025-08-22T21:30:07Z	INFO	[secret] Please see also https://trivy.dev/v0.65/docs/scanner/secret#recommendation for faster secret detection
+2025-08-22T21:30:18Z	INFO	Detected OS	family="alpine" version="3.22.1"
+2025-08-22T21:30:18Z	INFO	[alpine] Detecting vulnerabilities...	os_version="3.22" repository="3.22" pkg_num=45
+2025-08-22T21:30:18Z	INFO	Number of language-specific files	num=1
+2025-08-22T21:30:18Z	INFO	[gobinary] Detecting vulnerabilities...
+2025-08-22T21:30:18Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/v0.65/docs/scanner/vulnerability#severity-selection for details.
+
+Report Summary
+
+┌───────────────────────────────────────┬──────────┬─────────────────┬─────────┐
+│                Target                 │   Type   │ Vulnerabilities │ Secrets │
+├───────────────────────────────────────┼──────────┼─────────────────┼─────────┤
+│ carharms/db-service:5 (alpine 3.22.1) │  alpine  │        0        │    -    │
+├───────────────────────────────────────┼──────────┼─────────────────┼─────────┤
+│ usr/local/bin/gosu                    │ gobinary │       35        │    -    │
+└───────────────────────────────────────┴──────────┴─────────────────┴─────────┘
+Legend:
+- '-': Not scanned
+- '0': Clean (no security findings detected)
+
+
+usr/local/bin/gosu (gobinary)
+=============================
+Total: 35 (HIGH: 32, CRITICAL: 3)
+
+┌─────────┬────────────────┬──────────┬────────┬───────────────────┬──────────────────────────────────┬──────────────────────────────────────────────────────────────┐
+│ Library │ Vulnerability  │ Severity │ Status │ Installed Version │          Fixed Version           │                            Title                             │
+├─────────┼────────────────┼──────────┼────────┼───────────────────┼──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│ stdlib  │ CVE-2023-24538 │ CRITICAL │ fixed  │ v1.18.2           │ 1.19.8, 1.20.3                   │ golang: html/template: backticks not treated as string       │
+│         │                │          │        │                   │                                  │ delimiters                                                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24538                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-24540 │          │        │                   │ 1.19.9, 1.20.4                   │ golang: html/template: improper handling of JavaScript       │
+│         │                │          │        │                   │                                  │ whitespace                                                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24540                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2024-24790 │          │        │                   │ 1.21.11, 1.22.4                  │ golang: net/netip: Unexpected behavior from Is methods for   │
+│         │                │          │        │                   │                                  │ IPv4-mapped IPv6 addresses                                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2024-24790                   │
+│         ├────────────────┼──────────┤        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-27664 │ HIGH     │        │                   │ 1.18.6, 1.19.1                   │ golang: net/http: handle server errors after sending GOAWAY  │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-27664                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-28131 │          │        │                   │ 1.17.12, 1.18.4                  │ golang: encoding/xml: stack exhaustion in Decoder.Skip       │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-28131                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-2879  │          │        │                   │ 1.18.7, 1.19.2                   │ golang: archive/tar: github.com/vbatts/tar-split: unbounded  │
+│         │                │          │        │                   │                                  │ memory consumption when reading headers                      │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-2879                    │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-2880  │          │        │                   │                                  │ golang: net/http/httputil: ReverseProxy should not forward   │
+│         │                │          │        │                   │                                  │ unparseable query parameters                                 │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-2880                    │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-29804 │          │        │                   │ 1.17.11, 1.18.3                  │ ELSA-2022-17957: ol8addon security update (IMPORTANT)        │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-29804                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30580 │          │        │                   │                                  │ golang: os/exec: Code injection in Cmd.Start                 │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30580                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30630 │          │        │                   │ 1.17.12, 1.18.4                  │ golang: io/fs: stack exhaustion in Glob                      │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30630                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30631 │          │        │                   │                                  │ golang: compress/gzip: stack exhaustion in Reader.Read       │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30631                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30632 │          │        │                   │                                  │ golang: path/filepath: stack exhaustion in Glob              │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30632                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30633 │          │        │                   │                                  │ golang: encoding/xml: stack exhaustion in Unmarshal          │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30633                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30634 │          │        │                   │ 1.17.11, 1.18.3                  │ ELSA-2022-17957: ol8addon security update (IMPORTANT)        │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30634                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-30635 │          │        │                   │ 1.17.12, 1.18.4                  │ golang: encoding/gob: stack exhaustion in Decoder.Decode     │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-30635                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-32189 │          │        │                   │ 1.17.13, 1.18.5                  │ golang: math/big: decoding big.Float and big.Rat types can   │
+│         │                │          │        │                   │                                  │ panic if the encoded...                                      │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-32189                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41715 │          │        │                   │ 1.18.7, 1.19.2                   │ golang: regexp/syntax: limit memory used by parsing regexps  │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41715                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41716 │          │        │                   │ 1.18.8, 1.19.3                   │ Due to unsanitized NUL values, attackers may be able to      │
+│         │                │          │        │                   │                                  │ maliciously se...                                            │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41716                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41720 │          │        │                   │ 1.18.9, 1.19.4                   │ golang: os, net/http: avoid escapes from os.DirFS and        │
+│         │                │          │        │                   │                                  │ http.Dir on Windows                                          │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41720                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41722 │          │        │                   │ 1.19.6, 1.20.1                   │ golang: path/filepath: path-filepath filepath.Clean path     │
+│         │                │          │        │                   │                                  │ traversal                                                    │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41722                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41723 │          │        │                   │                                  │ golang.org/x/net/http2: avoid quadratic complexity in HPACK  │
+│         │                │          │        │                   │                                  │ decoding                                                     │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41723                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41724 │          │        │                   │                                  │ golang: crypto/tls: large handshake records may cause panics │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41724                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2022-41725 │          │        │                   │                                  │ golang: net/http, mime/multipart: denial of service from     │
+│         │                │          │        │                   │                                  │ excessive resource consumption                               │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2022-41725                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-24534 │          │        │                   │ 1.19.8, 1.20.3                   │ golang: net/http, net/textproto: denial of service from      │
+│         │                │          │        │                   │                                  │ excessive memory allocation                                  │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24534                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-24536 │          │        │                   │                                  │ golang: net/http, net/textproto, mime/multipart: denial of   │
+│         │                │          │        │                   │                                  │ service from excessive resource consumption                  │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24536                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-24537 │          │        │                   │                                  │ golang: go/parser: Infinite loop in parsing                  │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24537                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-24539 │          │        │                   │ 1.19.9, 1.20.4                   │ golang: html/template: improper sanitization of CSS values   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-24539                   │
+│         ├────────────────┤          │        │                   │                                  ├──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-29400 │          │        │                   │                                  │ golang: html/template: improper handling of empty HTML       │
+│         │                │          │        │                   │                                  │ attributes                                                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-29400                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-29403 │          │        │                   │ 1.19.10, 1.20.5                  │ golang: runtime: unexpected behavior of setuid/setgid        │
+│         │                │          │        │                   │                                  │ binaries                                                     │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-29403                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-39325 │          │        │                   │ 1.20.10, 1.21.3                  │ golang: net/http, x/net/http2: rapid stream resets can cause │
+│         │                │          │        │                   │                                  │ excessive work (CVE-2023-44487)                              │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-39325                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-45283 │          │        │                   │ 1.20.11, 1.21.4, 1.20.12, 1.21.5 │ The filepath package does not recognize paths with a \??\    │
+│         │                │          │        │                   │                                  │ prefix as...                                                 │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-45283                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-45287 │          │        │                   │ 1.20.0                           │ golang: crypto/tls: Timing Side Channel attack in RSA based  │
+│         │                │          │        │                   │                                  │ TLS key exchanges....                                        │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-45287                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2023-45288 │          │        │                   │ 1.21.9, 1.22.2                   │ golang: net/http, x/net/http2: unlimited number of           │
+│         │                │          │        │                   │                                  │ CONTINUATION frames causes DoS                               │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2023-45288                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2024-34156 │          │        │                   │ 1.22.7, 1.23.1                   │ encoding/gob: golang: Calling Decoder.Decode on a message    │
+│         │                │          │        │                   │                                  │ which contains deeply nested structures...                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2024-34156                   │
+│         ├────────────────┤          │        │                   ├──────────────────────────────────┼──────────────────────────────────────────────────────────────┤
+│         │ CVE-2025-47907 │          │        │                   │ 1.23.12, 1.24.6                  │ database/sql: Postgres Scan Race Condition                   │
+│         │                │          │        │                   │                                  │ https://avd.aquasec.com/nvd/cve-2025-47907                   │
+└─────────┴────────────────┴──────────┴────────┴───────────────────┴──────────────────────────────────┴──────────────────────────────────────────────────────────────┘
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Container Push)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Pushing Docker image to registry...
+[Pipeline] echo
+Current images for carharms/db-service:
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker images   | findstr carharms/db-service   || echo 'No images found' 
+carharms/db-service                            61        61b96aa3e917   43 hours ago   391MB
+carharms/db-service                            59        44b85d3d82a9   43 hours ago   391MB
+carharms/db-service                            60        8f6965af93f9   43 hours ago   391MB
+carharms/db-service                            5         46451a3e2360   43 hours ago   391MB
+carharms/db-service                            latest    46451a3e2360   43 hours ago   391MB
+carharms/db-service                            3         e1b3eb1b8070   43 hours ago   391MB
+carharms/db-service                            4         4f67382e703d   43 hours ago   391MB
+carharms/db-service                            2         8eee0e39b632   43 hours ago   391MB
+carharms/db-service                            58        d062f6ec3f06   43 hours ago   391MB
+[Pipeline] withCredentials
+Masking supported pattern matches of %DOCKER_TOKEN%
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>echo ****   | docker login -u carharms --password-stdin 
+Login Succeeded
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker push carharms/db-service:5 
+The push refers to repository [docker.io/carharms/db-service]
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+e3158a6c19a5: Waiting
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+a612d38c9b48: Waiting
+a15854d6fd91: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+0f940631c13f: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+c2175f24ca4e: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+a612d38c9b48: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+e3158a6c19a5: Waiting
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+0f940631c13f: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+e3158a6c19a5: Waiting
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+a612d38c9b48: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+0f940631c13f: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+c2175f24ca4e: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+a612d38c9b48: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+e3158a6c19a5: Waiting
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+0f940631c13f: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+e3158a6c19a5: Waiting
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+a612d38c9b48: Waiting
+a15854d6fd91: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+0f940631c13f: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+0f940631c13f: Waiting
+51a939567803: Waiting
+901a9540064a: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+e3158a6c19a5: Layer already exists
+fb9bdb590546: Waiting
+61a7421693bd: Waiting
+a612d38c9b48: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+6afcd9ec0fd9: Waiting
+9824c27679d3: Waiting
+6c13c55b4b82: Waiting
+0f940631c13f: Layer already exists
+51a939567803: Layer already exists
+901a9540064a: Layer already exists
+4f4fb700ef54: Layer already exists
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+61a7421693bd: Layer already exists
+a612d38c9b48: Layer already exists
+a15854d6fd91: Layer already exists
+685be96195b7: Waiting
+6afcd9ec0fd9: Layer already exists
+ce414b3fa674: Layer already exists
+c2175f24ca4e: Layer already exists
+685be96195b7: Layer already exists
+9824c27679d3: Layer already exists
+6c13c55b4b82: Layer already exists
+fb9bdb590546: Pushed
+5: digest: sha256:46451a3e23604e6226bc48ce4bd420da70a43b991557a2fedf5d74cfe07f28ac size: 856
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>echo "Pushed carharms/db-service:5" 
+"Pushed carharms/db-service:5"
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker tag carharms/db-service:5 carharms/db-service:latest 
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker push carharms/db-service:latest 
+The push refers to repository [docker.io/carharms/db-service]
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+51a939567803: Waiting
+61a7421693bd: Waiting
+901a9540064a: Waiting
+6afcd9ec0fd9: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+fb9bdb590546: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Waiting
+e3158a6c19a5: Waiting
+9824c27679d3: Waiting
+0f940631c13f: Waiting
+9824c27679d3: Waiting
+0f940631c13f: Waiting
+fb9bdb590546: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Waiting
+e3158a6c19a5: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+51a939567803: Waiting
+61a7421693bd: Waiting
+901a9540064a: Waiting
+6afcd9ec0fd9: Waiting
+51a939567803: Waiting
+61a7421693bd: Waiting
+901a9540064a: Waiting
+6afcd9ec0fd9: Waiting
+a15854d6fd91: Waiting
+685be96195b7: Waiting
+fb9bdb590546: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Waiting
+e3158a6c19a5: Waiting
+9824c27679d3: Waiting
+0f940631c13f: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+685be96195b7: Waiting
+51a939567803: Waiting
+61a7421693bd: Waiting
+901a9540064a: Waiting
+6afcd9ec0fd9: Waiting
+a15854d6fd91: Waiting
+0f940631c13f: Waiting
+fb9bdb590546: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Waiting
+e3158a6c19a5: Waiting
+9824c27679d3: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+51a939567803: Waiting
+61a7421693bd: Waiting
+901a9540064a: Waiting
+6afcd9ec0fd9: Waiting
+a15854d6fd91: Layer already exists
+685be96195b7: Waiting
+fb9bdb590546: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Waiting
+e3158a6c19a5: Waiting
+9824c27679d3: Waiting
+0f940631c13f: Waiting
+4f4fb700ef54: Waiting
+ce414b3fa674: Waiting
+c2175f24ca4e: Waiting
+6c13c55b4b82: Waiting
+a612d38c9b48: Layer already exists
+e3158a6c19a5: Waiting
+9824c27679d3: Waiting
+0f940631c13f: Waiting
+fb9bdb590546: Waiting
+ce414b3fa674: Layer already exists
+c2175f24ca4e: Layer already exists
+4f4fb700ef54: Waiting
+61a7421693bd: Layer already exists
+901a9540064a: Waiting
+6afcd9ec0fd9: Layer already exists
+685be96195b7: Layer already exists
+51a939567803: Waiting
+0f940631c13f: Layer already exists
+fb9bdb590546: Already exists
+6c13c55b4b82: Layer already exists
+e3158a6c19a5: Layer already exists
+9824c27679d3: Layer already exists
+4f4fb700ef54: Layer already exists
+51a939567803: Layer already exists
+901a9540064a: Layer already exists
+latest: digest: sha256:46451a3e23604e6226bc48ce4bd420da70a43b991557a2fedf5d74cfe07f28ac size: 856
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>echo "Pushed carharms/db-service:latest" 
+"Pushed carharms/db-service:latest"
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy to Environment)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+Preparing deployment to prod environment...
+[Pipeline] timeout
+Timeout set to expire in 10 min
+[Pipeline] {
+[Pipeline] input
+Deploy to production?
+Deploy or Abort
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] echo
+Deploying carharms/db-service:5 to prod
+[Pipeline] echo
+Would deploy to Kubernetes namespace: prod
+[Pipeline] echo
+Image: carharms/db-service:5
+[Pipeline] echo
+Also tagged as: carharms/db-service:latest
+[Pipeline] echo
+Deployment completed successfully
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] isUnix
+[Pipeline] bat
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker-compose -f docker-compose.yml down --remove-orphans   || echo "Cleanup done" 
+time="2025-08-22T16:31:03-05:00" level=warning msg="C:\\Users\\Carte\\.jenkins\\workspace\\icroservice3-db-multibranch_main\\docker-compose.yml: the attribute `version` is obsolete, it will be ignored, please remove it to avoid potential confusion"
+
+C:\Users\Carte\.jenkins\workspace\icroservice3-db-multibranch_main>docker system prune -f   || echo "Cleanup done" 
+Deleted build cache objects:
+3mw3w7n75p00etuoo8p0f5jyu
+zdll5ieciyfz0ss3gh7437jah
+8bv3cy3mbjc26k7m8iqybi2ff
+
+Total reclaimed space: 28.67kB
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] echo
+Pipeline completed successfully!
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
